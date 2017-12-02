@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#Here we receive data from the xbox controller using ROS and the subscribed values are published on a different channel.
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
