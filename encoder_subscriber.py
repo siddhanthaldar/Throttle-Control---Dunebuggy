@@ -1,8 +1,12 @@
 #!/usr/bin/env python
+'''
+This codes receives the taget velocity set by the xbox controller and 
+also receives the encoder readings of the left and right wheel. It then applies PID between the two and the angle through which the throttle must be rotated is published on a topic via ROS.
+'''
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import UInt16
-#from std_msgs.msg import Float64
+
 
 tar_vel = 0
 act_vel = 0
@@ -75,7 +79,7 @@ def callback(data):
 	#if output < 0:
 	#	output = - output
 	
-	angle = int(output)
+	angle = int(output)       #The output is directly mapped to angle and kp,ki,kd is set accordingly
 	if angle > 30:
 		angle = 30
 	if angle < 0 :
@@ -84,7 +88,7 @@ def callback(data):
 	oldRight = newRight
 
 	pub = rospy.Publisher("pid", UInt16, queue_size = 10)
-        pub.publish(angle)	
+        pub.publish(angle)	      #angle published
 	
 	'''
         print "left_vel: %f" % left_vel

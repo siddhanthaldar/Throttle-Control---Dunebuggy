@@ -22,9 +22,9 @@ def callback_xbox(data) :
 	v_tz = data.linear.z
 
 	if v_tx :
-		tar_vel += 1#0.1
+		tar_vel += 1     #Increment velocity by 1
 	if v_ty  :
-		tar_vel -= 1#0.1
+		tar_vel -= 1     #Decrease velocity by 1
 	if v_tz  :
 		tar_vel = 0
 	
@@ -63,7 +63,7 @@ def callback(data):
 	#wheel radius = 10.5 inch, dt = 20ms, no. of ticks per turn = 12800
 	left_vel = 0.006452 * (newLeft - oldLeft) * 18 / 5                 
 	right_vel = 0.006452 * (newRight - oldRight) * 18 / 5
-	act_vel = - right_vel #(left_vel + right_vel)/2
+	act_vel = (left_vel + right_vel)/2
 
 	error = tar_vel - act_vel
 	errorsum = errorsum + error
@@ -86,15 +86,16 @@ def callback(data):
 	pub = rospy.Publisher("pid", UInt16, queue_size = 10)
         pub.publish(angle)	
 	
-	
-        #print "left_vel: %f" % left_vel
-        #print "right_vel: %f" % right_vel
-        #print "newleft: %f" % newLeft
+	'''
+        print "left_vel: %f" % left_vel
+        print "right_vel: %f" % right_vel
+        print "newleft: %f" % newLeft
         print "newRight: %f" % newRight
-	#print "Error: %f" % error
+	print "Error: %f" % error
 	print "Angle: %f" % angle
 	print("tar_vel: %f" % tar_vel)
 	print("Act_vel: %f" % act_vel)
+	'''
 
 def encoder():
     global angle

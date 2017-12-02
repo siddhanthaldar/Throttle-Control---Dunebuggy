@@ -1,3 +1,9 @@
+/* 
+   This arduino code calculates the encoder reading of the left and the right wheel and publishes the
+   same on a topic through ROSSerial. It also receives the angle to which the throttle must be opened 
+   and rotates the servo accordingly.
+*/
+
 #define USE_USBCON
 #include <Encoder.h>
 #include <Servo.h>
@@ -11,7 +17,7 @@ Servo myservo;
 
 void servo(const std_msgs::UInt16& data)
 {
-  myservo.write(data.data);
+  myservo.write(data.data);             //Servo rotated by the required angle
 }
 
 ros::NodeHandle nh;
@@ -35,7 +41,9 @@ void setup() {
 }
 
 void loop() {
-
+    
+    //Calculate encoder readings
+    
     newLeft = knobLeft.read();
     newRight = knobRight.read();
 
@@ -48,7 +56,7 @@ void loop() {
     enc_value.linear.y = newRight;
     //tar_vel = tar_vel + 1;
     //enc_value.linear.z = tar_vel;
-    chatter.publish( &enc_value);
+    chatter.publish( &enc_value);              //publish encoder readings
     nh.spinOnce();
     delay(20);
     
